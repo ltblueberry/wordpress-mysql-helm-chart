@@ -2,7 +2,7 @@
 
 The simpliest example of helm chart for Wordpress and MySQL (**chart** directory).
 
-Also, original manifests provided  for using via **kubectl** (**manifests** directory).
+Also, original manifests provided for using via **kubectl** (**original-manifests** directory).
 
 This demo was used with GCP Kubernetes cluster.
 
@@ -48,9 +48,9 @@ git clone git@github.com:ltblueberry/wordpress-mysql-helm-chart.git
 ```
 2) Execute next commands from repository directory
 ```sh
-kubectl create -f manifests/namespace.yaml
-kubectl create -f manifests/mysql
-kubectl create -f manifests/wordpress
+kubectl create -f original-manifests/namespace.yaml
+kubectl create -f original-manifests/mysql
+kubectl create -f original-manifests/wordpress
 ```
 *All manifests configured with namespace called **demo-application***
 
