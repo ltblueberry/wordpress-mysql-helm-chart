@@ -1,0 +1,7 @@
+apiVersion: v2
+name: demo-wordpress-mysql
+description: Demo Wordpress + MySQL helm chart by ltblueberry
+type: application
+
+version: 0.1.0
+appVersion: 1.16.0

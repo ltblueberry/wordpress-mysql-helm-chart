@@ -1,0 +1,21 @@
+namespace: demo-application
+
+wordpress:
+    deployment:
+        image: wordpress:4.8-apache
+        db_host: mysql
+        replicaCount: 1
+    service:
+        type: LoadBalancer
+        port: 80
+    
+mysql:
+    deployment:
+        image: mysql:5.6
+        replicaCount: 1
+    service:
+        type: ClusterIP
+        port: 3306
+    pvc:
+        accessMode: ReadWriteOnce
+        storage: 2Gi
