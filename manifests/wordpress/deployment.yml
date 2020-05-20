@@ -19,8 +19,8 @@ spec:
       - name: wordpress
         image: wordpress:4.8-apache
         ports:
-        - name: http
-          containerPort: 80
+          - name: http
+            containerPort: 80
         env:
         - name: WORDPRESS_DB_HOST
           value: mysql
