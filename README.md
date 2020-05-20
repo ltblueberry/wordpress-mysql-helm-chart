@@ -1,6 +1,7 @@
 # Kubernetes Wordpress + MySQL helm chart
 
 The simpliest example of helm chart for Wordpress and MySQL (**chart** directory).
+
 Also, original manifests provided  for using via **kubectl** (**manifests** directory).
 
 This demo was used with GCP Kubernetes cluster.
