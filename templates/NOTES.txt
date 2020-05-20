@@ -1,0 +1,7 @@
+1. Get the application URL by running these commands:
+{{- if contains "LoadBalancer" .Values.wordpress.service.type }}
+    NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+          You can watch the status of by running 'kubectl get service -n {{ .Values.namespace }}'
+{{- else }}
+  echo "Change your service type to LoadBalancer to open Wordpress in web-browser"
+{{- end }}

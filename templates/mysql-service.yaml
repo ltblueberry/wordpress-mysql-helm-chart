@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "mychart.mysql" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "mychart.labels" . | nindent 4 }}
+    app: mysql
+spec:
+  type: {{ .Values.mysql.service.type }}
+  ports:
+  - name: mysql
+    port: {{ .Values.mysql.service.port }}
+    targetPort: mysql
+  selector:
+    {{- include "mychart.selectorLabels" . | nindent 4 }}

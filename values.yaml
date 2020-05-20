@@ -3,7 +3,6 @@ namespace: demo-application
 wordpress:
     deployment:
         image: wordpress:4.8-apache
-        db_host: mysql
         replicaCount: 1
     service:
         type: LoadBalancer

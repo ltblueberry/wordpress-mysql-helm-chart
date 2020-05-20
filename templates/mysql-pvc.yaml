@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "mychart.mysql.pvc" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "mychart.labels" . | nindent 4 }}
+    app: mysql
+spec:
+  accessModes:
+    - {{ .Values.mysql.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.mysql.pvc.storage }}
