@@ -90,6 +90,16 @@ Defined in [values.yaml](https://github.com/ltblueberry/wordpress-mysql-helm-cha
 |`pvc.accessMode` | `ReadWriteOnce `|PVC Access mode
 |`pvc.storage` | `2Gi `|PVC Storage size
 
+# Uninstall
+1) Execute the next command to get the list of helm releases
+```sh
+helm list
+```
+2) Execute the next command to uninstall helm release by RELEASE_NAME
+```sh
+helm uninstall RELEASE_NAME
+```
+
 ## License
 
 **[MIT License](LICENSE)**
