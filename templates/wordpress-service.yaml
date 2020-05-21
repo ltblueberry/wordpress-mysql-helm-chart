@@ -1,11 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "mychart.wordpress" . }}
+  name: {{ template "wordpress.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "mychart.labels" . | nindent 4 }}
-    app: wordpress
+    {{- include "wordpress.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.wordpress.service.type }}
   ports:
@@ -14,4 +13,4 @@ spec:
     targetPort: http
     protocol: TCP
   selector:
-    {{- include "mychart.selectorLabels" . | nindent 4 }}
+    {{- include "wordpress.selectorLabels" . | nindent 4 }}

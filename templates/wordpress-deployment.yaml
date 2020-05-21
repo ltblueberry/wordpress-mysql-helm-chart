@@ -1,20 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "mychart.wordpress" . }}
+  name: {{ template "wordpress.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "mychart.labels" . | nindent 4 }}
-    app: wordpress
+    {{- include "wordpress.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.mysql.deployment.replicaCount }}
   selector:
     matchLabels:
-      {{- include "mychart.selectorLabels" . | nindent 6 }}
+      {{- include "wordpress.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "mychart.selectorLabels" . | nindent 8 }}
+        {{- include "wordpress.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: wordpress
@@ -24,9 +23,9 @@ spec:
             containerPort: 80
         env:
         - name: WORDPRESS_DB_HOST
-          value: {{ template "mychart.mysql" . }}
+          value: {{ template "mysql.fullname" . }}
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ template "mychart.mysql.secrets" . }}
+              name: {{ template "mysql.secrets" . }}
               key: db-password

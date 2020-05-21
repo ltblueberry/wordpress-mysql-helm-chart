@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "mychart.name" -}}
+{{- define "wordpress.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "mychart.fullname" -}}
+{{- define "wordpress.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,55 +27,73 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "mychart.chart" -}}
+{{- define "wordpress.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
-Create wordpress name
+Common labels for wordpress
 */}}
-{{- define "mychart.wordpress" -}}
-{{ include "mychart.fullname" . }}-wordpress
+{{- define "wordpress.labels" -}}
+app.kubernetes.io/name: {{ include "wordpress.name" . }}
+helm.sh/chart: {{ include "wordpress.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/*
-Create mysql name
+Selector labels for wordpress
 */}}
-{{- define "mychart.mysql" -}}
-{{ include "mychart.fullname" . }}-mysql
+{{- define "wordpress.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "wordpress.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end -}}
+
+
+{{/*
+Name of mysql
+*/}}
+{{- define "mysql.name" -}}
+demo-mysql
+{{- end -}}
+
+{{/*
+Create a default fully qualified mysql name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "mysql.fullname" -}}
+{{- printf "%s-%s" .Release.Name "demo-mysql" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Create mysql pvc name
 */}}
-{{- define "mychart.mysql.pvc" -}}
-{{ include "mychart.mysql" . }}-data
+{{- define "mysql.pvc" -}}
+{{ include "mysql.fullname" . }}-data
 {{- end -}}
 
 {{/*
 Create mysql secrets name
 */}}
-{{- define "mychart.mysql.secrets" -}}
-{{ include "mychart.mysql" . }}-secrets
+{{- define "mysql.secrets" -}}
+{{ include "mysql.fullname" . }}-secrets
 {{- end -}}
 
 
 {{/*
-Common labels
+Common labels for mysql
 */}}
-{{- define "mychart.labels" -}}
-helm.sh/chart: {{ include "mychart.chart" . }}
-{{ include "mychart.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+{{- define "mysql.labels" -}}
+app.kubernetes.io/name: {{ include "mysql.name" . }}
+helm.sh/chart: {{ include "wordpress.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/*
-Selector labels
+Selector labels for mysql
 */}}
-{{- define "mychart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "mychart.name" . }}
+{{- define "mysql.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "mysql.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

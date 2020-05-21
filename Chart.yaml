@@ -1,5 +1,5 @@
 apiVersion: v2
-name: demo-chart
+name: demo-wordpress
 description: Demo Wordpress + MySQL helm chart by ltblueberry
 type: application
 
