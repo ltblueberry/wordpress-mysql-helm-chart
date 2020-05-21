@@ -2,7 +2,7 @@
 
 The simpliest example of helm chart for Wordpress and MySQL (**chart** directory).
 
-Also, original manifests provided for using via **kubectl** (**original-manifests** directory).
+Also, original manifests provided  for using via **kubectl** (**original-manifests** directory).
 
 This demo was used with GCP Kubernetes cluster.
 
@@ -10,6 +10,7 @@ This demo was used with GCP Kubernetes cluster.
 
 * **gcloud** ([installation guide is here](https://cloud.google.com/sdk/docs/quickstarts/))
 * **kubectl** ([installation guide is here](https://kubernetes.io/docs/tasks/tools/install-kubectl/))
+* **helm** ([installation guide is here](https://helm.sh/docs/intro/install/))
 
 # Setup cluster
 To start using gcloud utility execute next command
@@ -46,21 +47,48 @@ kubectl get nodes
 ```sh
 git clone git@github.com:ltblueberry/wordpress-mysql-helm-chart.git
 ```
-2) Execute next commands from repository directory
-```sh
-kubectl create -f original-manifests/namespace.yaml
-kubectl create -f original-manifests/mysql
-kubectl create -f original-manifests/wordpress
-```
-*All manifests configured with namespace called **demo-application***
+2) Execute next commands **from repository directory**
 
+*check that all templates are valid*
+```sh
+helm template .
+```
+*install chart*
+```sh
+helm install . --generate-name
+```
 3) Check your wordpress service **External IP** address with next command (may take some time)
 ```sh
 kubectl get service -n demo-application
 ```
+*By-default namespace that used in chart called **demo-application**. If you changed it, make sure you define the proper namespace in **kubectl get** command.*
 
 Now you can check this IP address with web-browser
 
+# Helm Variables
+Defined in [values.yaml](https://github.com/ltblueberry/wordpress-mysql-helm-chart/blob/develop/values.yaml)
+
+| Name              | Default Value       |Difinition   |
+|-----------------------|---------------------|---------------------|
+| `namespace` | `demo-application` |Kubernetes namespace|
+
+## `wordpress`:
+| Name              | Default Value       |Difinition   |
+|-----------------------|---------------------|---------------------|
+| `deployment.image` | `wordpress:4.8-apache` |Docker image for Wordpress|
+|`deployment.replicaCount` | `1` |Number of Pods to run
+|`service.type` |` LoadBalancer` |Kubernetes Service type
+|`service.port` | `80 `|Publishing port
+
+## `mysql`:
+| Name              | Default Value       |Difinition   |
+|-----------------------|---------------------|---------------------|
+| `deployment.image` | `mysql:5.6` |Docker image for MySQL|
+|`deployment.replicaCount` | `1` |Number of Pods to run
+|`service.type` |` ClusterIP` |Kubernetes Service type
+|`service.port` | `3306 `|Publishing port
+|`pvc.accessMode` | `ReadWriteOnce `|PVC Access mode
+|`pvc.storage` | `2Gi `|PVC Storage size
 
 ## License
 
