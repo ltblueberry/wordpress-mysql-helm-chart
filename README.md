@@ -1,8 +1,8 @@
-# Kubernetes Wordpress + MySQL helm chart
+# Kubernetes WordPress + MySQL helm chart
 
-The simpliest example of helm chart for Wordpress and MySQL (**chart** directory).
+The simplest example of a helm chart for WordPress and MySQL (**chart** directory).
 
-Also, original manifests provided  for using via **kubectl** (**original-manifests** directory).
+Also, original manifests provided for using via **kubectl** (**original-manifests** directory).
 
 This demo was used with GCP Kubernetes cluster.
 
@@ -18,12 +18,12 @@ To start using gcloud utility execute next command
 gcloud init
 ```
 
-Execute next command to sign in
+Execute the next command to sign in
 ```sh
 gcloud auth login
 ```
 
-Select your GCP project (if you have one) or create new one (you can do it via GCP Web Interface)
+Select your GCP project (if you have one) or create a new one (you can do it via GCP Web Interface)
 ```sh
 gcloud projects list
 gcloud config set project <YOUR_PROJECT_ID>
@@ -57,11 +57,11 @@ helm template .
 ```sh
 helm install . --generate-name
 ```
-3) Check your wordpress service **External IP** address with next command (may take some time)
+3) Check your WordPress service **External IP** address with next command (may take some time)
 ```sh
 kubectl get service -n demo-application
 ```
-*By-default namespace that used in chart called **demo-application**. If you changed it, make sure you define the proper namespace in **kubectl get** command.*
+*By-default namespace that used in the chart called **demo-application**. If you changed it, make sure you define the proper namespace in **kubectl get** command.*
 
 Now you can check this IP address with web-browser
 
